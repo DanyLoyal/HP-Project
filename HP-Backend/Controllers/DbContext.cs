@@ -1,6 +1,5 @@
 ﻿using HP_Backend.Models;
 using Microsoft.EntityFrameworkCore;
-
 namespace HP_Backend.Controllers
 {
     public class XdcCpqContext : DbContext
@@ -14,4 +13,5 @@ namespace HP_Backend.Controllers
         public DbSet<Quotes> Quotes { get; set; }
         public DbSet<QuoteItem> QuoteItems { get; set; }
     }
+
 }

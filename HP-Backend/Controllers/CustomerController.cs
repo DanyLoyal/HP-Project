@@ -1,12 +1,10 @@
 ﻿using HP_Backend.Models;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RouteAttribute = Microsoft.AspNetCore.Components.RouteAttribute;
 
 namespace HP_Backend.Controllers
 {
-        [Route("api/customers")]
+        [Route("api/[controller]")]
         [ApiController]
         public class CustomerController : ControllerBase
         {

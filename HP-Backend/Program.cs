@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Register the DbContext 
 builder.Services.AddDbContext<XdcCpqContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefoultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configure CORS with ReactApp
 builder.Services.AddCors(options =>
