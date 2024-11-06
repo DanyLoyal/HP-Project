@@ -1,4 +1,5 @@
-﻿using HP_Backend.Models;
+﻿using HP_Backend.Data;
+using HP_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,7 @@ namespace HP_Backend.Controllers
 
         // GET: api/Quotes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Quotes>>> GetQuotes()
+        public async Task<ActionResult<IEnumerable<Quote>>> GetQuotes()
         {
             return await _context.Quotes.ToListAsync();
         }

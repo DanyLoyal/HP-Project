@@ -1,4 +1,5 @@
-﻿using HP_Backend.Models;
+﻿using HP_Backend.Data;
+using HP_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HP_Backend.Migrations
 {
     [DbContext(typeof(XdcCpqContext))]
-    [Migration("20241106131203_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241106135642_SeedRelatedEntities")]
+    partial class SeedRelatedEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,26 @@ namespace HP_Backend.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            CustomerId = 1,
+                            Email = "alice.johnson@example.com",
+                            Name = "Alice Johnson"
+                        },
+                        new
+                        {
+                            CustomerId = 2,
+                            Email = "bob.smith@example.com",
+                            Name = "Bob Smith"
+                        },
+                        new
+                        {
+                            CustomerId = 3,
+                            Email = "sdasda@sadasd.com",
+                            Name = "Charlie Brown"
+                        });
                 });
 
             modelBuilder.Entity("HP_Backend.Models.Product", b =>
@@ -71,6 +91,80 @@ namespace HP_Backend.Migrations
                     b.HasKey("ProductID");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductID = 1,
+                            AnnualPrice = 159.99m,
+                            Description = "License for Product A",
+                            MonthlyPrice = 15.99m,
+                            Name = "Product A"
+                        },
+                        new
+                        {
+                            ProductID = 2,
+                            AnnualPrice = 259.99m,
+                            Description = "Subscription for Product B",
+                            MonthlyPrice = 25.99m,
+                            Name = "Product B"
+                        },
+                        new
+                        {
+                            ProductID = 3,
+                            AnnualPrice = 109.99m,
+                            Description = "License for Product C",
+                            MonthlyPrice = 10.99m,
+                            Name = "Product C"
+                        },
+                        new
+                        {
+                            ProductID = 4,
+                            AnnualPrice = 209.99m,
+                            Description = "Subscription for Product D",
+                            MonthlyPrice = 20.99m,
+                            Name = "Product D"
+                        },
+                        new
+                        {
+                            ProductID = 5,
+                            AnnualPrice = 59.99m,
+                            Description = "License for Product E",
+                            MonthlyPrice = 5.99m,
+                            Name = "Product E"
+                        },
+                        new
+                        {
+                            ProductID = 6,
+                            AnnualPrice = 309.99m,
+                            Description = "Subscription for Product F",
+                            MonthlyPrice = 30.99m,
+                            Name = "Product F"
+                        },
+                        new
+                        {
+                            ProductID = 7,
+                            AnnualPrice = 129.99m,
+                            Description = "License for Product G",
+                            MonthlyPrice = 12.99m,
+                            Name = "Product G"
+                        },
+                        new
+                        {
+                            ProductID = 8,
+                            AnnualPrice = 359.99m,
+                            Description = "Subscription for Product H",
+                            MonthlyPrice = 35.99m,
+                            Name = "Product H"
+                        },
+                        new
+                        {
+                            ProductID = 9,
+                            AnnualPrice = 89.99m,
+                            Description = "License for Product I",
+                            MonthlyPrice = 8.99m,
+                            Name = "Product I"
+                        });
                 });
 
             modelBuilder.Entity("HP_Backend.Models.QuoteItem", b =>

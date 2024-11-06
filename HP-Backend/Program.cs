@@ -1,4 +1,4 @@
-using HP_Backend.Controllers;
+using HP_Backend.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

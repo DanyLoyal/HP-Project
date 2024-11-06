@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HP_Backend.Migrations
 {
     [DbContext(typeof(XdcCpqContext))]
-    [Migration("20241106131203_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241106135000_SeedData")]
+    partial class SeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

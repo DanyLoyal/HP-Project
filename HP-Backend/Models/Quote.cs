@@ -3,14 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HP_Backend.Models
 {
-    public class Quotes
+    public class Quote
     {
         [Key]
         public int QuoteID { get; set; }
         public int CustomerID { get; set; }
-        public DateTime QuoteDate { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
         public decimal TotalPrice { get; set; }
-        // Additional properties as needed
+        public DateTime QuoteDate { get; set; }
+
+        // Add this property  
+        public Customer Customer { get; set; }
+        public ICollection<QuoteItem> QuoteItems { get; set; }
     }
 }
