@@ -12,9 +12,8 @@ namespace HP_Backend.Models
         public int Quantity { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
-        // Additional properties as needed
 
-        public Quote Quote { get; set; }
-        public Product Product { get; set; }
+        public Quote? Quote { get; set; }  // Temporarily optional for seeding
+        public Product? Product { get; set; }  // Temporarily optional for seeding
     }
 }

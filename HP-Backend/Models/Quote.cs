@@ -11,8 +11,7 @@ namespace HP_Backend.Models
         public decimal TotalPrice { get; set; }
         public DateTime QuoteDate { get; set; }
 
-        // Add this property  
-        public Customer Customer { get; set; }
-        public ICollection<QuoteItem> QuoteItems { get; set; }
+        public Customer? Customer { get; set; }  // Temporarily optional for seeding
+        public ICollection<QuoteItem>? QuoteItems { get; set; } = new List<QuoteItem>();  // Initialize with empty list
     }
 }
