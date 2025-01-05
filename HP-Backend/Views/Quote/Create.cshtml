@@ -1,0 +1,35 @@
+﻿@model HP_Backend.Views.Quote.CreateModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create Quote";
+    var customers = ViewData["Customers"] as List<HP_Backend.Models.Customer>;
+    var products = ViewData["Products"] as List<HP_Backend.Models.Product>;
+}
+
+<h2 class="mb-4">Create a Quote</h2>
+
+<form method="post" asp-action="CreateQuote" class="mb-4">
+    <div class="mb-3">
+        <label for="customer" class="form-label">Customer:</label>
+        <select id="customer" name="customerId" class="form-select" required>
+            @foreach (var customer in customers)
+            {
+                <option value="@customer.CustomerId">@customer.Name</option>
+            }
+        </select>
+    </div>
+
+    <h3 class="mb-3">Products</h3>
+    <div id="productList" class="mb-3">
+        @foreach (var product in products)
+        {
+            <div class="mb-2">
+                <label class="form-label">@product.Name (@product.MonthlyPrice.ToString("C")):</label>
+                <input type="hidden" name="productIds" value="@product.ProductID" />
+                <input type="number" class="form-control w-25" name="quantities" min="0" placeholder="Quantity" />
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Generate Quote</button>
+</form>

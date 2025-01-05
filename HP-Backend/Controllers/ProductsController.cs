@@ -1,12 +1,12 @@
-﻿using HP_Backend.Models;
+﻿using HP_Backend.Data;
+using HP_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HP_Backend.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController : ControllerBase
+    [Route("[controller]")]
+    public class ProductsController : Controller
     {
         private readonly XdcCpqContext _context;
 
@@ -15,13 +15,24 @@ namespace HP_Backend.Controllers
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: /Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<IActionResult> Index()
         {
-            return await _context.Products.ToListAsync();
+            var products = await _context.Products.ToListAsync();
+            return View(products); // Returns the 'Index' view with the list of products
         }
 
-        // Other CRUD actions (POST, PUT, DELETE)
+        // GET: /Products/Details/{id}
+        [HttpGet("Details/{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductID == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product); // Returns the 'Details' view with the specific product
+        }
     }
 }

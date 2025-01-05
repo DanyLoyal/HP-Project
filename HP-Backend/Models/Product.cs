@@ -1,4 +1,6 @@
-﻿namespace HP_Backend.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HP_Backend.Models
 {
     public class Product
     {
@@ -7,6 +9,6 @@
         public string Description { get; set; }
         public decimal MonthlyPrice { get; set; }
         public decimal AnnualPrice { get; set; }
-        // Additional properties as needed
+        public ICollection<QuoteItem> QuoteItems { get; set; } // Add this property
     }
 }

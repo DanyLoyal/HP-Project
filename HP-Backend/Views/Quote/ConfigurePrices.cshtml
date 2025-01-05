@@ -1,0 +1,58 @@
+﻿@using HP_Backend.Controllers
+@using HP_Backend.Models
+
+@model dynamic
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Configure Prices";
+    var customer = ViewData["Customer"] as Customer;
+    var quoteItems = ViewData["QuoteItems"] as List<QuoteItemViewModel>;
+}
+
+<h2 class="mb-4">Configure Prices for @customer?.Name</h2>
+
+@if (quoteItems != null && quoteItems.Any())
+{
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Monthly Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in quoteItems)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.FinalPrice.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No quote items available.</p>
+}
+
+<form method="post" asp-controller="Quote" asp-action="QuoteSummary" class="mb-5">
+    <input type="hidden" name="customerId" value="@customer?.CustomerId" />
+    @if (quoteItems != null)
+    {
+        @for (int i = 0; i < quoteItems.Count; i++)
+        {
+            <input type="hidden" name="productIds" value="@quoteItems[i].ProductID" />
+            <input type="hidden" name="quantities" value="@quoteItems[i].Quantity" />
+
+            <div class="mb-3">
+                <label class="form-label">Discount for @quoteItems[i].ProductName</label>
+                <input type="number" class="form-control w-25" name="discounts" min="0" max="100" value="0" />
+            </div>
+        }
+    }
+    <button type="submit" class="btn btn-primary">View Quote Summary</button>
+</form>

@@ -1,0 +1,50 @@
+﻿@model dynamic
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Select Products";
+    var customer = ViewData["Customer"] as HP_Backend.Models.Customer;
+    var products = ViewData["Products"] as List<HP_Backend.Models.Product>;
+}
+
+<h2 class="mb-4">Select Products for @customer?.Name</h2>
+
+<form method="post" asp-controller="Quote" asp-action="ConfigurePrices" class="mb-4">
+    <input type="hidden" name="customerId" value="@customer?.CustomerId" />
+
+    <h3 class="mb-3">Select Products</h3>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Product</th>
+                <th>Monthly Price</th>
+                <th>Annual Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (products != null && products.Any())
+            {
+                @foreach (var product in products)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.MonthlyPrice.ToString("C")</td>
+                        <td>@product.AnnualPrice.ToString("C")</td>
+                        <td>
+                            <input type="hidden" name="productIds" value="@product.ProductID" />
+                            <input type="number" class="form-control w-50" name="quantities" min="1" placeholder="Quantity" required />
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">No products available.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Continue to Configure Prices</button>
+</form>
