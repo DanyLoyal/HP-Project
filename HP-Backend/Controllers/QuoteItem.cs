@@ -3,12 +3,10 @@ using HP_Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace HP_Backend.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class QuoteItemController : ControllerBase
+    [Route("[controller]")]
+    public class QuoteItemController : Controller
     {
         private readonly XdcCpqContext _context;
 
@@ -17,13 +15,24 @@ namespace HP_Backend.Controllers
             _context = context;
         }
 
-        // GET: api/QuoteItems
+        // GET: /QuoteItem
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<QuoteItem>>> GetQuoteItems()
+        public async Task<IActionResult> Index()
         {
-            return await _context.QuoteItems.ToListAsync();
+            var quoteItems = await _context.QuoteItems.ToListAsync();
+            return View(quoteItems); // Returns the 'Index' view with the list of quote items
         }
 
-        // Other CRUD actions (POST, PUT, DELETE)
+        // GET: /QuoteItem/Details/{id}
+        [HttpGet("Details/{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var quoteItem = await _context.QuoteItems.FirstOrDefaultAsync(qi => qi.QuoteItemID == id);
+            if (quoteItem == null)
+            {
+                return NotFound();
+            }
+            return View(quoteItem); // Returns the 'Details' view with the specific quote item
+        }
     }
 }

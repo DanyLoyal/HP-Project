@@ -4,43 +4,47 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllersWithViews();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// Register the DbContext 
+// Register the DbContext
 builder.Services.AddDbContext<XdcCpqContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configure CORS with ReactApp
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowReactApp",
-        policy => policy
-            .WithOrigins("http://localhost:3000") // React app URL
-            .AllowAnyHeader()
-            .AllowAnyMethod());
-});
+// Tilføj session til at håndtere TempData
+builder.Services.AddSession();
 
+// Add Swagger only for development purposes
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSwaggerGen();
+    builder.Services.AddEndpointsApiExplorer();
+}
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-
-app.UseCors("AllowReactApp");
-
+// Enable HTTPS redirection and static file serving
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+// Aktiver session før authorization og endpoints
+app.UseSession();
 
 app.UseAuthorization();
 
-app.MapControllers();
+// Set default routing to load the CustomerController's SelectOrAdd page
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Customer}/{action=SelectOrAdd}/{id?}");
 
+// Run the application
 app.Run();

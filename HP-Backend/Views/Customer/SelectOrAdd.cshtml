@@ -1,0 +1,45 @@
+﻿@model IEnumerable<HP_Backend.Models.Customer>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Select a Customer";
+}
+
+<h2 class="mb-3">Select a Customer</h2>
+
+<form method="post" asp-action="Add" class="mb-5">
+    <h3>Add New Customer</h3>
+    <div class="mb-2">
+        <input type="text" name="Name" placeholder="Customer Name" class="form-control" required />
+    </div>
+    <div class="mb-2">
+        <input type="email" name="Email" placeholder="Customer Email" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Customer</button>
+</form>
+
+<h3>Existing Customers</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.Name</td>
+                <td>@customer.Email</td>
+                <td>
+                    <a class="btn btn-sm btn-success"
+                       href="@Url.Action("SelectProducts", "Quote", new { customerId = customer.CustomerId })">
+                        Select
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

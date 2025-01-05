@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HP_Backend.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerController : Controller
     {
         private readonly XdcCpqContext _context;
 
@@ -16,13 +14,24 @@ namespace HP_Backend.Controllers
             _context = context;
         }
 
-        // GET: api/Customer
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
+        // GET: /Customer/SelectOrAdd
+        public async Task<IActionResult> SelectOrAdd()
         {
-            return await _context.Customers.ToListAsync();
+            var customers = await _context.Customers.ToListAsync();
+            return View(customers);
         }
 
-        // Other CRUD actions (POST, PUT, DELETE)
+        // POST: /Customer/Add
+        [HttpPost]
+        public async Task<IActionResult> Add(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Customers.Add(customer);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("SelectOrAdd");
+            }
+            return View("SelectOrAdd", await _context.Customers.ToListAsync());
+        }
     }
 }

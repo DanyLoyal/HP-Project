@@ -1,0 +1,49 @@
+﻿@using HP_Backend.Controllers
+@using HP_Backend.Models
+@model dynamic
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Quote Summary";
+    var customer = ViewData["Customer"] as HP_Backend.Models.Customer;
+    var quoteItems = ViewData["QuoteItems"] as List<QuoteItemViewModel>;
+    var totalPrice = ViewData["TotalPrice"] != null ? (decimal)ViewData["TotalPrice"] : 0m;
+    var totalAnnualPrice = totalPrice * 12;
+}
+
+<h2 class="mb-4">Quote Summary</h2>
+<p><strong>Customer:</strong> @customer?.Name</p>
+<p><strong>Email:</strong> @customer?.Email</p>
+
+<h3 class="mt-4">Products</h3>
+@if (quoteItems != null && quoteItems.Any())
+{
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Product</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Final Monthly Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in quoteItems)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Description</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.FinalPrice.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No items available.</p>
+}
+
+<h3 class="mt-4">Total Monthly Price: @totalPrice.ToString("C")</h3>
+<h3 class="mt-4">Total Annual Price: @totalAnnualPrice.ToString("C") </h3>
